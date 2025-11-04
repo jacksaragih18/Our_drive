@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pilih Link Redirect</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #f7f9fc, #eef6ff);
+      margin: 0;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(15,30,60,0.08);
+      padding: 20px;
+      width: min(800px, 96%);
+    }
+    h1 { margin: 0 0 8px 0; font-size: 20px; }
+    p { margin: 0 0 16px 0; color: #333; }
+    .list { display: grid; grid-template-columns: repeat(auto-fill,minmax(180px,1fr)); gap: 10px; }
+    button {
+      padding: 10px; border-radius: 8px; border: none;
+      background: #007bff; color: white; cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover { background: #0056d2; }
+    select, input {
+      padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc;
+      width: 100%;
+    }
+    .note { color: #666; font-size: 13px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1> Redirect by: SAGAR INNOVATION</h1>
+    <p>Pilih link di bawah ini atau gunakan dropdown.</p>
+
+    <label for="selectLink">Pilih link:</label>
+    <select id="selectLink"></select>
+
+    <div style="margin-top:10px; display:flex; gap:10px;">
+      <button id="openBtn">Buka</button>
+      <button id="openNewBtn">Buka di Tab Baru</button>
+    </div>
+
+    <h3 style="margin-top:20px;">Daftar Link:</h3>
+    <div class="list" id="linksList"></div>
+
+    <p class="note">Gunakan <code>?go=nomor</code> untuk langsung redirect (contoh: <code>?go=3</code>).</p>
+  </div>
+
+  <script>
+    // === Ganti daftar link dan alias di sini ===
+    const links = [
+      { name: "Folder 1", url: "https://drive.google.com/drive/folders/14bZ_YMKhqnoMjOT8DIi_mMfJMgfu9TVn" },
+      { name: "Folder 2", url: "https://drive.google.com/drive/folders/1ohOHSjCavdJx_llDygtie9Ooxc0fF1oq" },
+      { name: "Folder 3", url: "https://drive.google.com/drive/folders/1XzB3HmiKaeM5uv5UxbRU07PxWRUiHCZA" },
+      { name: "Folder 4", url: "https://drive.google.com/drive/folders/1CvxOtLp0BTXnTH9gG7q2GEN0sYXOZ_-6" },
+      { name: "Folder 5", url: "https://drive.google.com/drive/folders/1u-rlJuj4QNdt-AGf-oBgaeFT-IJiZXuQ" },
+      { name: "File Proyek", url: "https://example.com/6" },
+      { name: "Laporan", url: "https://example.com/7" },
+      { name: "Cloud Drive", url: "https://example.com/8" },
+      { name: "Folder 9", url: "https://example.com/9" },
+      { name: "Folder 10", url: "https://example.com/10" },
+      { name: "Folder 11", url: "https://example.com/11" },
+      { name: "Folder 12", url: "https://example.com/12" },
+      { name: "Folder 13", url: "https://example.com/13" },
+      { name: "Folder 14", url: "https://example.com/14" },
+      { name: "Folder 15", url: "https://example.com/15" },
+      { name: "Folder 16", url: "https://example.com/16" },
+      { name: "Folder 17", url: "https://example.com/17" },
+      { name: "Folder 18", url: "https://example.com/18" },
+      { name: "Folder 19", url: "https://example.com/19" },
+      { name: "Folder 20", url: "https://example.com/20" }
+    ];
+    // ============================================
+
+    const select = document.getElementById("selectLink");
+    const list = document.getElementById("linksList");
+    const openBtn = document.getElementById("openBtn");
+    const openNewBtn = document.getElementById("openNewBtn");
+
+    // Isi dropdown dan daftar tombol
+    links.forEach((item, i) => {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = `${i + 1}. ${item.name}`;
+      select.appendChild(opt);
+
+      const btn = document.createElement("button");
+      btn.textContent = `${i + 1}. ${item.name}`;
+      btn.addEventListener("click", () => window.location.href = item.url);
+      list.appendChild(btn);
+    });
+
+    function goTo(index, newTab = false) {
+      const item = links[index];
+      if (newTab) window.open(item.url, "_blank");
+      else window.location.href = item.url;
+    }
+
+    openBtn.addEventListener("click", () => {
+      const idx = Number(select.value);
+      goTo(idx);
+    });
+
+    openNewBtn.addEventListener("click", () => {
+      const idx = Number(select.value);
+      goTo(idx, true);
+    });
+
+    // Auto redirect jika ?go=nomor di URL
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("go")) {
+      const n = parseInt(params.get("go"));
+      if (!isNaN(n) && n >= 1 && n <= links.length) {
+        window.location.href = links[n - 1].url;
+      }
+    }
+  </script>
+</body>
+</html>
