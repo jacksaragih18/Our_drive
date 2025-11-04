@@ -1,0 +1,16 @@
+{
+  "background_color": "#ff0000",
+  "dir": "auto",
+  "display": "standalone",
+  "name": "Privat drive",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Jack&amp;ruth",
+  "start_url": "/https://jacksaragih18.github.io/Our_drive/privatdrive.html",
+  "theme_color": "#ffffff",
+  "id": "Privat",
+  "lang": "id",
+  "categories": [
+    "photo"
+  ]
+}
